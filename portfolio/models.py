@@ -2,13 +2,43 @@ from django.db import models
 from imagekit.models import ImageSpecField
 from imagekit.processors import SmartCrop
 
+
+class FeaturedPortfolio(models.Model):
+    portfolio = models.OneToOneField('Portfolio')
+
+    def save(self):
+        self.id=1
+        super(FeaturedPortfolio, self).save()
+
+    def delete(self):
+        pass
+
+    class Meta:
+        verbose_name_plural = "Featured Portfolio"
+        
+    def __unicode__(self):
+        return self.portfolio.name
+
+
+class Portfolio(models.Model):   
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=50, unique=True)
+    intro = models.TextField(blank=True, null=True)
+    projects = models.ManyToManyField('Project', blank=True)
+    public = models.BooleanField()
+ 
+    def __unicode__(self):
+        return self.name
+
+
 class Project(models.Model):
-    name = models.CharField(max_length=200);
+    name = models.CharField(max_length=200)
     slug = models.SlugField(max_length=50, unique=True)
     summary = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
+    people = models.ManyToManyField('Person', blank=True)
     activities = models.ManyToManyField('Activity', blank=True)
     associations = models.ManyToManyField('Association', blank=True)
 
@@ -17,7 +47,7 @@ class Project(models.Model):
 
 
 class Activity(models.Model):
-    name = models.CharField(max_length=50);
+    name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50, unique=True)
     
     class Meta:
@@ -28,9 +58,22 @@ class Activity(models.Model):
         
 
 class Association(models.Model): 
-    name = models.CharField(max_length=50);
+    name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50, unique=True)
      
+    def __unicode__(self):
+        return self.name
+
+
+class Person(models.Model): 
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50, unique=True)
+    position = models.CharField(max_length=50, blank=True);
+    url = models.URLField(blank=True, null=True)
+     
+    class Meta:
+        verbose_name_plural = "People"
+    
     def __unicode__(self):
         return self.name
 

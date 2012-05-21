@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load markup %}
+
+
+{% block header %}
+
+     {{ portfolio.intro|markdown }}
+
+{% endblock %}
+
+{% block content %}
+  
+    {% for Project in portfolio.projects.all %}
+        {{ Project.name|markdown }}
+    {% endfor %}
+
+{% endblock %}
