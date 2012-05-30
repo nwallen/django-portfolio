@@ -1,4 +1,5 @@
 {% load markup %}
+{% load less %}
 
 <!doctype html>
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
@@ -12,8 +13,12 @@
   <meta name="description" content="">
 
   <meta name="viewport" content="width=device-width">
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
-
+  {% if debug %}
+  <link rel="stylesheet/less" type="text/css" media="all" href="{{ STATIC_URL }}css/style.less" />
+  <script src="{{ STATIC_URL }}js/libs/less-1.3.0.min.js"></script>  
+  {% else %}
+  <link rel="stylesheet" href="{{ STATIC_URL }}{% less 'css/style.less' %}">
+  {% endif %} 
   <script src="{{ STATIC_URL }}js/libs/modernizr-2.5.3.min.js"></script>
 </head>
 <body>

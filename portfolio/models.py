@@ -42,6 +42,20 @@ class Project(models.Model):
     activities = models.ManyToManyField('Activity', blank=True)
     associations = models.ManyToManyField('Association', blank=True)
 
+    def save(self):
+        #automatic markdown image syntax completion: ![title] to ![title](url)    
+        body = self.description
+     
+        for media in self.media_set.all():
+            imageTag = '![%s]' % media.title
+            imageReplace = '![%s](%s)' % (media.title, media.image.url)
+            # don't add the url if already added
+            exists = body.find(imageReplace)
+            if exists == -1:
+                self.description = body.replace(imageTag, imageReplace)
+        
+        super(Project, self).save()
+
     def __unicode__(self):
         return self.name
 
@@ -83,7 +97,6 @@ class Media(models.Model):
     order = models.IntegerField(blank=True, null=True)
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=200, blank=True, null=True)
-    url = models.URLField(blank=True, null=True);
     image = models.ImageField(upload_to='projectimages', blank=True)
     thumbnail = ImageSpecField ([SmartCrop(50,20)],image_field='image',format='JPEG', options={'quality':90})
 

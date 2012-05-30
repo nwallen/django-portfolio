@@ -5,13 +5,22 @@
 {% block header %}
 
      {{ portfolio.intro|markdown }}
-
+    <nav>
+        <ul class="prt-nav">
+        {% for Project in portfolio.projects.all %}
+               <li class="prt-nav-link"><a  href="#{{Project.slug}}">{{Project.name}}</a></li>
+        {% endfor %}
+        </ul>
+    </nav>
 {% endblock %}
 
 {% block content %}
-  
+    <section class="prt-projects">
     {% for Project in portfolio.projects.all %}
-        {{ Project.name|markdown }}
+        <article class="prt-project">
+            <h2 class="prt-project-name" id="{{Project.slug}}">{{Project.name}}</h2>
+            {{ Project.description|markdown }}
+        </article>
     {% endfor %}
-
+    </section>
 {% endblock %}
