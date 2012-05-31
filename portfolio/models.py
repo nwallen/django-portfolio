@@ -1,6 +1,6 @@
 from django.db import models
 from imagekit.models import ImageSpecField
-from imagekit.processors import SmartCrop
+from imagekit.processors import SmartResize, Adjust
 
 
 class FeaturedPortfolio(models.Model):
@@ -48,7 +48,7 @@ class Project(models.Model):
      
         for media in self.media_set.all():
             imageTag = '![%s]' % media.title
-            imageReplace = '![%s](%s)' % (media.title, media.image.url)
+            imageReplace = '![%s](%s)' % (media.title, media.medium.url)
             # don't add the url if already added
             exists = body.find(imageReplace)
             if exists == -1:
@@ -98,7 +98,9 @@ class Media(models.Model):
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=200, blank=True, null=True)
     image = models.ImageField(upload_to='projectimages', blank=True)
-    thumbnail = ImageSpecField ([SmartCrop(50,20)],image_field='image',format='JPEG', options={'quality':90})
+    medium = ImageSpecField ([SmartResize(800,400)],image_field='image',format='JPEG', options={'quality':90})
+    thumbnail = ImageSpecField ([SmartResize(50,50), Adjust(color=1.2, contrast=1.2)],image_field='image',format='JPEG', options={'quality':100})
+    thumbnail_bw = ImageSpecField ([SmartResize(50,50), Adjust(color=0, contrast=1.2)],image_field='image',format='JPEG', options={'quality':100})
 
     class Meta:
         ordering = ['order']

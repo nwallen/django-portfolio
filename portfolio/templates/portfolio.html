@@ -3,12 +3,19 @@
 
 
 {% block header %}
-
-     {{ portfolio.intro|markdown }}
+    <article class="prt-intro">
+        {{ portfolio.intro|markdown }}
+    </article>
     <nav>
         <ul class="prt-nav">
         {% for Project in portfolio.projects.all %}
-               <li class="prt-nav-link"><a  href="#{{Project.slug}}">{{Project.name}}</a></li>
+        <li class="prt-nav-link clearfix">
+            <a class="scroll"  href="#{{Project.slug}}">
+                <div class="thumb" style="background-image:url('{{Project.media_set.all.0.thumbnail.url}}');" /></div>
+                <span class="prt-nav-link-name">{{Project.name}}</span>  
+            </a>
+        </li>
+            
         {% endfor %}
         </ul>
     </nav>
@@ -17,10 +24,31 @@
 {% block content %}
     <section class="prt-projects">
     {% for Project in portfolio.projects.all %}
-        <article class="prt-project">
-            <h2 class="prt-project-name" id="{{Project.slug}}">{{Project.name}}</h2>
+    <article class="prt-project" id="{{Project.slug}}" >
+            <a href="{{BASE_URL}}#{{Project.slug}}">
+                <h2 class="prt-project-name">{{Project.name}}</h2>
+            </a>
+            {% for Association in Project.associations.all %}
+                <h3 class="prt-project-assc">{{Association.name}}</h3>
+            {% endfor %}
+            <p class="prt-project-dates">
+                <span class="project-start-date date">{{Project.start_date|date:"M Y"}}</span> -
+                <span class="project-end-date date">{{Project.end_date|date:"M Y"}}</span>
+            </p>
+            {{ Project.summary|markdown }}    
+            <img class="prt-project-image" src="{{Project.media_set.all.0.medium.url}}"/>
             {{ Project.description|markdown }}
-        </article>
+            <ul class="prt-project-acts">
+            {% for Activity in Project.activities.all %}
+                <li class="project-act">{{Activity.name}}</li>
+            {% endfor %}
+            </ul>
+            <ul class="prt-project-people">
+            {% for People in Project.people.all %}
+                <li class="project-person">{{People.name}}</li>
+            {% endfor %}
+            </ul>
+    </article>
     {% endfor %}
     </section>
 {% endblock %}

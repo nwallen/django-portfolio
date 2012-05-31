@@ -5,6 +5,7 @@ settings_local.py
 *.rej
 *.swp
 *.sqlite
+*.db
 .installed.cfg
 __minitage__*
 bin/*
@@ -14,5 +15,6 @@ eggs
 log
 parts
 media/uploads
+portfolio/migrations
 tmp
 .DS_Store

@@ -215,22 +215,108 @@ td { vertical-align: top; }
 
 
 /* ==|== primary styles =====================================================
-   Author:
+   Author:Nicholas Wallen
    ========================================================================== */
 
+@font-size:14px;
+@leading:@font-size * 1.5;
+@column:@leading * 1.618;
 
+body{
+    //background-image:url('../img/grid.png');
+    margin-top:@leading*2;
+    font-size:@font-size;
+    line-height:@leading;
+}
 
+p,ul,ol, h1, h2, h3, h4, h5, h6, img{
+    margin-top:0;
+    margin-bottom:@leading;
+}
 
+h1{
+    font-size:@font-size*2;
+    line-height:@leading*1.5;
+}
 
+h2{
+    font-size:@font-size*1.5;
+}
 
+h3{ 
+    font-size:@font-size*1.2;
+}
 
+/* NAV BAR */
 
+.circle{ 
+    -webkit-border-radius: 999px;
+    -moz-border-radius: 999px;
+    border-radius: 50%;
+}
 
+.inactive-shadow{
+    box-shadow:
+        inset 0 0 0 1px #999,
+        inset 0 0 0 6px #ccc,
+        inset 0 0 1px 230px rgba(0,0,0,0.3);
+}
 
+.active-shadow{
+    box-shadow:
+        inset 0 0 0 1px #999,
+        inset 0 0 0 3px #ccc, 
+        inset 0 0 0 0 rgba(0,0,0,0.0);  
+}
 
+@thumb-width: 50px;
+@thumb-height: 50px;
 
+.prt-nav{
+    position:fixed;
+    top:@leading*2;
+    left:@column;
+}
 
+.prt-nav-link{
+    padding:@leading/2;
+    background-color:#ccc;
+    .thumb{
+        .circle;
+        .inactive-shadow;
+        float:left; 
+        width:@thumb-width;
+        height:@thumb-height;
+       -webkit-transition:all 0.35s ease;
 
+    }
+    &:hover,&.active{
+        cursor:pointer;
+        .thumb{
+             .active-shadow;
+              
+        }
+    }
+}
+
+.prt-nav-link-name{
+    font-size:@font-size*.75;
+    float:left;
+    margin-top:@leading*.75;
+    margin-left:@leading/2;
+    text-transform:uppercase;
+    color:#222;
+    max-width:@column*4;
+}
+
+/* CONTENT */
+
+#content, header{
+    margin-left:@column*8;
+    margin-right:@column*2;
+    margin-bottom:@leading;
+    max-width:@column*24;
+}
 
 
 /* ==|== media queries ======================================================
