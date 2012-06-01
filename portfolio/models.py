@@ -22,11 +22,27 @@ class FeaturedPortfolio(models.Model):
 
 class Portfolio(models.Model):   
     name = models.CharField(max_length=200)
+    author = models.CharField(max_length=200, null=True)
     slug = models.SlugField(max_length=50, unique=True)
     intro = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='projectimages', blank=True, null=True)
+    image_crop = ImageSpecField ([SmartResize(200,200)],image_field='image',format='JPEG', options={'quality':90})
+    footer= models.TextField(blank=True, null=True)
     projects = models.ManyToManyField('Project', blank=True)
     public = models.BooleanField()
  
+    def save(self):
+        #automatic markdown image syntax completion: ![title] to ![title](url)    
+        body = self.intro 
+        imageTag = '![image]'
+        imageReplace = '![%s](%s)' % ('image', self.image_crop.url)
+        # don't add the url if already added
+        exists = body.find(imageReplace)
+        if exists == -1:
+            self.intro = body.replace(imageTag, imageReplace)
+        
+        super(Portfolio, self).save()
+
     def __unicode__(self):
         return self.name
 
@@ -99,8 +115,8 @@ class Media(models.Model):
     description = models.CharField(max_length=200, blank=True, null=True)
     image = models.ImageField(upload_to='projectimages', blank=True)
     medium = ImageSpecField ([SmartResize(800,400)],image_field='image',format='JPEG', options={'quality':90})
-    thumbnail = ImageSpecField ([SmartResize(50,50), Adjust(color=1.2, contrast=1.2)],image_field='image',format='JPEG', options={'quality':100})
-    thumbnail_bw = ImageSpecField ([SmartResize(50,50), Adjust(color=0, contrast=1.2)],image_field='image',format='JPEG', options={'quality':100})
+    thumbnail = ImageSpecField ([SmartResize(60,60), Adjust(color=1.2, contrast=1.2)],image_field='image',format='JPEG', options={'quality':100})
+    thumbnail_bw = ImageSpecField ([SmartResize(60,60), Adjust(color=0, contrast=1.2)],image_field='image',format='JPEG', options={'quality':100})
 
     class Meta:
         ordering = ['order']

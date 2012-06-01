@@ -13,8 +13,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', FeaturedPortfolioView.as_view()), 
-    url(r'^login/$',  'django.contrib.auth.views.login' ),
-    url(r'^logout/$',  'django.contrib.auth.views.logout', {'next_page':'/'} ),
+    url(r'^accounts/login/$',  'django.contrib.auth.views.login' ),
+    url(r'^accounts/logout/$',  'django.contrib.auth.views.logout', {'next_page':'/'} ),
     url(r'^api/', include(project_resource.urls)),
     url(r'^admin/', include(admin.site.urls)), 
     url(r'^(?P<slug>[\w-]+)/$', PortfolioView.as_view()),

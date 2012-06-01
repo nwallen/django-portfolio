@@ -7,12 +7,14 @@
         {{ portfolio.intro|markdown }}
     </article>
     <nav>
+        <h4 class="prt-author">{{portfolio.author}}</h4>
+        <h1 class="prt-name">{{portfolio.name}}</h1>
         <ul class="prt-nav">
         {% for Project in portfolio.projects.all %}
         <li class="prt-nav-link clearfix">
             <a class="scroll"  href="#{{Project.slug}}">
                 <div class="thumb" style="background-image:url('{{Project.media_set.all.0.thumbnail.url}}');" /></div>
-                <span class="prt-nav-link-name">{{Project.name}}</span>  
+                <span class="prt-nav-link-name name">{{Project.name}}</span>  
             </a>
         </li>
             
@@ -24,31 +26,60 @@
 {% block content %}
     <section class="prt-projects">
     {% for Project in portfolio.projects.all %}
-    <article class="prt-project" id="{{Project.slug}}" >
-            <a href="{{BASE_URL}}#{{Project.slug}}">
-                <h2 class="prt-project-name">{{Project.name}}</h2>
-            </a>
+    <article class="prt-project" id="{{Project.slug}}" > 
+            
+            <ul class="associations">
             {% for Association in Project.associations.all %}
-                <h3 class="prt-project-assc">{{Association.name}}</h3>
+                <li><h4 class="prt-project-assc">{{Association.name}}</h4>
+                {% if Project.associations.all|length > 1 and forloop.counter < Project.associations.all|length %}&{% endif %}
+                </li>
             {% endfor %}
-            <p class="prt-project-dates">
+            </ul>
+
+            <h2 class="prt-project-name name">
+                <a href="{{BASE_URL}}#{{Project.slug}}">{{Project.name}}</a>
+            </h2>
+
+            <p class="prt-project-dates dates">
                 <span class="project-start-date date">{{Project.start_date|date:"M Y"}}</span> -
                 <span class="project-end-date date">{{Project.end_date|date:"M Y"}}</span>
             </p>
-            {{ Project.summary|markdown }}    
+            
             <img class="prt-project-image" src="{{Project.media_set.all.0.medium.url}}"/>
-            {{ Project.description|markdown }}
-            <ul class="prt-project-acts">
+
+           
+
+            <span class="prt-project-summary summary">
+                {{ Project.summary|markdown }} 
+            </span> 
+            <ul class="prt-project-acts acts">
+             <li class="intro"> What I Did: </li>      
             {% for Activity in Project.activities.all %}
-                <li class="project-act">{{Activity.name}}</li>
+            <li class="project-act act"><span class="name">{{Activity.name}}</span>
+                {% if Project.activities.all|length > 1 and forloop.counter < Project.activities.all|length and forloop.revcounter0 != 1 %},{% endif %}
+                {% if Project.activities.all|length > 1 and forloop.revcounter0 == 1 %} &{% endif %}</li>
             {% endfor %}
             </ul>
-            <ul class="prt-project-people">
+            
+            {% if Project.people.all|length > 1%}  
+            <ul class="prt-project-people people">
+                <li class="intro"> Who I worked with: </li>  
             {% for People in Project.people.all %}
-                <li class="project-person">{{People.name}}</li>
+            <li class="project-person person"><span class="name">{{People.name}}</span>
+                {% if Project.people.all|length > 1 and forloop.counter < Project.people.all|length and forloop.revcounter0 != 1 %},{% endif %}
+                {% if Project.people.all|length > 1 and forloop.revcounter0 == 1 %} &{% endif %}</li>
             {% endfor %}
             </ul>
-    </article>
+            {% endif %}
+
+            {{ Project.description|markdown }}
+            </article>
     {% endfor %}
     </section>
 {% endblock %}
+
+{% block footer %}
+    {{ portfolio.footer|markdown }}
+{% endblock %}
+
+

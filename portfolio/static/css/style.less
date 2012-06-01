@@ -218,12 +218,52 @@ td { vertical-align: top; }
    Author:Nicholas Wallen
    ========================================================================== */
 
+@import url("http://fonts.googleapis.com/css?family=Cabin+Sketch:400,700|Lato:300|Francois+One|Codystar|Rokkitt");
+
+
 @font-size:14px;
 @leading:@font-size * 1.5;
 @column:@leading * 1.618;
 
+.title-font (@color:grey){
+    font-family : 'Codystar', sans-serif;
+    font-weight:400;
+    color:@color;
+    text-transform:uppercase;
+}
+
+.header-font (@color:teal){
+    font-family : 'Francois One', sans-serif;
+    font-weight:400;
+    color:@color;
+    text-transform:uppercase;
+}
+
+.pullquote-font(@color:#666){
+    font-family:'Rokkitt';
+    font-size:@font-size*1.5;
+    line-height:@leading*1.5;
+    color:@color;
+}
+
+.body-font{
+    font-family : 'Lato', sans-serif;
+    font-weight:300;
+}
+
+.columns(@count:3){
+    -moz-column-count:@count; /* Firefox */
+    -webkit-column-count:@count; /* Safari and Chrome */
+    column-count:@count;
+    column-gap:@column;
+    -moz-column-gap:@column;
+    -webkit-column-gap:@column;
+}
+
 body{
-    //background-image:url('../img/grid.png');
+    .body-font;
+    background-image:url('../img/bk_tissue.png');
+    background-attachment:fixed;
     margin-top:@leading*2;
     font-size:@font-size;
     line-height:@leading;
@@ -235,66 +275,128 @@ p,ul,ol, h1, h2, h3, h4, h5, h6, img{
 }
 
 h1{
-    font-size:@font-size*2;
+    .title-font;
+    font-size:@font-size*2.4;
     line-height:@leading*1.5;
 }
 
 h2{
-    font-size:@font-size*1.5;
-}
+    .header-font;
+    font-size:@font-size*2.2;
+    line-height:@leading*1.5;
+    a{
+        text-decoration:none;
+    }
+ }
+
 
 h3{ 
+    .header-font;
     font-size:@font-size*1.2;
 }
+
+h4{
+    .header-font;
+}
+
+
 
 /* NAV BAR */
 
 .circle{ 
     -webkit-border-radius: 999px;
     -moz-border-radius: 999px;
-    border-radius: 50%;
+    border-radius: 100%;
+}
+
+.card{
+    padding:@column;
+    margin-bottom:@leading*2;
+    boarder: 1px solid #222;
+    -webkit-box-shadow: 1px 1px 2px 1px #999;
+    box-shadow: 1px 1px 2px 1px #999;
+}
+
+
+.shadow-stroke(@width:3px){
+    
+    -webkit-box-shadow:0 0 0 @width #ccc;
+    box-shadow:0 0 0 @width #ccc;
 }
 
 .inactive-shadow{
-    box-shadow:
+    
+    -webkit-box-shadow:
+        0 0 2px 1px #ccc,
         inset 0 0 0 1px #999,
-        inset 0 0 0 6px #ccc,
-        inset 0 0 1px 230px rgba(0,0,0,0.3);
+        inset 0 0 0 4px #fff,
+        inset 0 0 1px 230px rgba(0,0,0,0.6);
+    box-shadow:
+        0 0 2px 1px #ccc,
+        inset 0 0 0 1px #999,
+        inset 0 0 0 4px #fff,
+        inset 0 0 1px 230px rgba(0,0,0,0.6);
 }
 
 .active-shadow{
+    background-position:-10px -10px;
+    
+    -webkit-box-shadow:
+        0 0 0px 0px #ccc,
+        0 0 0 1px #999,
+        inset 0 0 0 0 #ccc, 
+        inset 0 0 0 0 rgba(0,0,0,0.0);  
     box-shadow:
-        inset 0 0 0 1px #999,
-        inset 0 0 0 3px #ccc, 
+        0 0 0px 0px #ccc,
+        0 0 0 1px #999,
+        inset 0 0 0 0 #ccc, 
         inset 0 0 0 0 rgba(0,0,0,0.0);  
 }
 
-@thumb-width: 50px;
-@thumb-height: 50px;
+.animate-transition (@duration:0.2s, @easing:ease){
+    -webkit-transition: all @duration @easing;  /* Saf3.2+, Chrome */
+    -moz-transition: all @duration @easing;  /* FF4+ */
+    -ms-transition: all @duration @easing;  /* IE10 */
+    -o-transition: all @duration @easing;  /* Opera 10.5+ */
+    transition: all @duration @easing;
+}
 
-.prt-nav{
+@thumb-width: 40px;
+@thumb-height: 40px;
+
+nav{
     position:fixed;
     top:@leading*2;
     left:@column;
+    max-width:@column*8;
+    height:90%;
+    overflow:auto;
 }
 
 .prt-nav-link{
-    padding:@leading/2;
-    background-color:#ccc;
+    padding:0 0 @leading*.5 1px;
+    a{
+        text-decoration:none;
+    }    
     .thumb{
         .circle;
         .inactive-shadow;
+        .animate-transition;
         float:left; 
         width:@thumb-width;
         height:@thumb-height;
-       -webkit-transition:all 0.35s ease;
-
+       
+    }
+    .name{
+        .header-font(grey); 
     }
     &:hover,&.active{
         cursor:pointer;
+        .name{
+            .header-font;
+        }
         .thumb{
              .active-shadow;
-              
         }
     }
 }
@@ -303,19 +405,109 @@ h3{
     font-size:@font-size*.75;
     float:left;
     margin-top:@leading*.75;
-    margin-left:@leading/2;
-    text-transform:uppercase;
+    margin-left:@leading*.5;
+    margin-right:@leading*.5;
+    text-transform:capitalize;
     color:#222;
-    max-width:@column*4;
+    line-height:@leading*.5;
 }
 
 /* CONTENT */
 
 #content, header{
-    margin-left:@column*8;
+    margin-left:@column*9;
     margin-right:@column*2;
     margin-bottom:@leading;
     max-width:@column*24;
+}
+
+.prt-intro{
+    .pullquote-font;
+    margin-top:@leading*3.9;
+    min-width:300px;
+    img{
+        .circle;
+        .shadow-stroke(10px);
+        width:200px;
+        float:right;
+        margin-left:@column;
+        margin-top:@leading;
+    }
+    .big{
+        .pullquote-font;
+        font-size:@font-size*4;
+        font-weight:800;
+        margin-right:@leading*.5;
+        line-height:@leading*2.5;
+    }
+}
+
+.prt-project{
+    .card;
+    position:relative; 
+    background-color:#fff;
+    .name a{
+        .header-font;
+    }
+    .dates{
+        .body-font;
+        position:absolute;
+        top:@column;
+        right:@column;
+    }
+    .associations{
+        padding:0;
+        li{
+            list-style-type:none;
+            display:inline;
+            h4{
+                display:inline;
+            }
+        }
+    }
+    .acts,.people{
+        padding:0;
+    }
+    .acts{
+        margin-bottom:@leading*.5;
+    }
+    .acts li, .people li{
+        display:inline-block;
+        list-style-type:none;
+    }
+    .act .name{
+        text-transform:uppercase;
+        .header-font(grey);
+        //margin-right:@font-size*.25;
+        //margin-left:@font-size*.25;
+        //background-color: teal;
+        //padding:2px;
+    }
+    .person .name{
+        .header-font(grey);
+    }
+    .intro{
+        .header-font;
+        margin-right:@font-size*.5;
+    }
+    .summary{
+        .pullquote-font;
+    }
+}
+
+.prt-project img{
+    -webkit-transition:all 0.2s ease;
+    width:100%;
+}
+
+/* FOOTER */
+
+footer{
+    position:fixed;
+    bottom:@leading*2;
+    left:@column;
+    max-width:@column*7;
+
 }
 
 
