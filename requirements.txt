@@ -1,6 +1,7 @@
 Django==1.4
 Markdown==2.1.1
 PIL==1.1.7
+South==0.7.5
 django-imagekit==2.0.1
 django-less==0.3
 django-tastypie==0.9.11
