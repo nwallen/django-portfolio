@@ -124,9 +124,9 @@ INSTALLED_APPS = (
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
-COMPRESS_PRECOMPILERS = (
-   ('text/less', 'lessc {infile} {outfile}'),
-)
+#COMPRESS_PRECOMPILERS = (
+#   ('text/less', 'lessc {infile} {outfile}'),
+#)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
