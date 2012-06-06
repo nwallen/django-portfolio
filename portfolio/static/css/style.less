@@ -320,8 +320,10 @@ h4{
 
 .shadow-stroke(@width:3px){
     
-    -webkit-box-shadow:0 0 0 @width #ccc;
-    box-shadow:0 0 0 @width #ccc;
+    -webkit-box-shadow:
+        0 0 0 @width #ccc;
+    box-shadow:
+        0 0 0 @width #ccc;
 }
 
 .inactive-shadow{
@@ -371,6 +373,7 @@ nav{
     max-width:@column*8;
     height:90%;
     overflow:auto;
+    .animate-transition;
 }
 
 .prt-nav-link{
@@ -495,9 +498,26 @@ nav{
     .summary{
         .pullquote-font;
     }
+    .description p{
+        img{
+            .card;
+            padding:4px;
+            float:right;
+            width:60%;
+            margin:0;
+            margin-left:@column;
+            margin-top:@leading;
+            .animate-transition;
+            &:active{
+                width:100%;
+                margin-left: 0;
+                margin-bottom:@leading;
+            }
+        }
+    }
 }
 
-.prt-project img{
+.prt-project-image{
     -webkit-transition:all 0.2s ease;
     width:100%;
 }
@@ -519,20 +539,20 @@ footer{
    Modify as content requires.
    ========================================================================== */
 
-@media only screen and (max-width:600px) {
+@media only screen and (max-width:800px) {
      nav{
         .card; 
         position:static;
         float:none;
-        top:@leading;
+        top:-@leading;
         left:0;
         right:auto;
         padding:@leading;
+        padding-top:);
         max-width:100%;
         margin:0;
-        width:100%;
+        margin-top:-@leading*2;
         height:90%;
-        overflow:auto;
     }
     #content, header{
         padding-left:0;
@@ -540,11 +560,20 @@ footer{
         margin-left:auto;
         margin-right:auto;
     }
+
+    .prt-project{
+        .description p{
+            img{ 
+                width:100%;
+                margin-left: 0;
+                margin-bottom:@leading;
+            }
+        }
+    }
     
     header .prt-intro{
         padding:@leading;
         margin-top:@leading;
-        font-size: @font-size*1.6;
     }
 
     footer{

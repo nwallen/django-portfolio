@@ -72,8 +72,9 @@
             {% endfor %}
             </ul>
             {% endif %}
-
-            {{ Project.description|markdown }}
+            <span class="prt-project-description description">
+                {{ Project.description|markdown }}
+            </span>
             </article>
     {% endfor %}
     </section>
