@@ -3,9 +3,7 @@
 
 
 {% block header %}
-    <article class="prt-intro">
-        {{ portfolio.intro|markdown }}
-    </article>
+  
     <nav>
         <h4 class="prt-author">{{portfolio.author}}</h4>
         <h1 class="prt-name">{{portfolio.name}}</h1>
@@ -20,7 +18,10 @@
             
         {% endfor %}
         </ul>
-    </nav>
+    </nav>  
+    <article class="prt-intro">
+        {{ portfolio.intro|markdown }}
+    </article>
 {% endblock %}
 
 {% block content %}
