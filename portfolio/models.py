@@ -64,13 +64,16 @@ class Project(models.Model):
      
         for media in self.media_set.all():
             imageTag = '![%s]' % media.title
-            imageReplace = '![%s](%s)' % (media.title, media.medium.url)
+            imageReplace = '<img title="%s" data-src="%s" src=""/><span class="img-caption">%s</span>' % (media.title, media.medium.url, media.description)
             # don't add the url if already added
             exists = body.find(imageReplace)
             if exists == -1:
                 self.description = body.replace(imageTag, imageReplace)
         
         super(Project, self).save()
+
+    class Meta:
+        ordering = ['-start_date']
 
     def __unicode__(self):
         return self.name

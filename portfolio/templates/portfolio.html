@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load markup %}
 
+{% block title %} {{portfolio.author}} {{portfolio.name}} {% endblock %}
 
 {% block header %}
   
@@ -27,33 +28,31 @@
 {% block content %}
     <section class="prt-projects">
     {% for Project in portfolio.projects.all %}
-    <article class="prt-project" id="{{Project.slug}}" > 
-            
+    <article class="prt-project clearfix" id="{{Project.slug}}" > 
+            <p class="prt-project-dates dates">
+                <span class="project-start-date date">{{Project.start_date|date:"M Y"}}</span> -
+                <span class="project-end-date date">{{Project.end_date|date:"M Y"}}</span>
+            </p>
+
             <ul class="associations">
             {% for Association in Project.associations.all %}
                 <li><h4 class="prt-project-assc">{{Association.name}}</h4>
                 {% if Project.associations.all|length > 1 and forloop.counter < Project.associations.all|length %}&{% endif %}
                 </li>
             {% endfor %}
-            </ul>
-
+            </ul> 
+            
+           
+            
             <h2 class="prt-project-name name">
                 <a href="{{BASE_URL}}#{{Project.slug}}">{{Project.name}}</a>
             </h2>
-
-            <p class="prt-project-dates dates">
-                <span class="project-start-date date">{{Project.start_date|date:"M Y"}}</span> -
-                <span class="project-end-date date">{{Project.end_date|date:"M Y"}}</span>
-            </p>
-            
-            <img class="prt-project-image" src="{{Project.media_set.all.0.medium.url}}"/>
-
-           
-
             <span class="prt-project-summary summary">
                 {{ Project.summary|markdown }} 
-            </span> 
-            <ul class="prt-project-acts acts">
+            </span>
+
+            <img class="prt-project-image" src="{{Project.media_set.all.0.medium.url}}"/> 
+           <ul class="prt-project-acts acts">
              <li class="intro"> What I Did: </li>      
             {% for Activity in Project.activities.all %}
             <li class="project-act act"><span class="name">{{Activity.name}}</span>
@@ -66,15 +65,21 @@
             <ul class="prt-project-people people">
                 <li class="intro"> Who I worked with: </li>  
             {% for People in Project.people.all %}
-            <li class="project-person person"><span class="name">{{People.name}}</span>
+            <li class="project-person person">
+                {%if People.url %}<a href="{{People.url}}" target="_blank">{%endif%}
+                <span class="name">{{People.name}}</span>
+                {%if People.url %}</a>{%endif%}
+
                 {% if Project.people.all|length > 1 and forloop.counter < Project.people.all|length and forloop.revcounter0 != 1 %},{% endif %}
-                {% if Project.people.all|length > 1 and forloop.revcounter0 == 1 %} &{% endif %}</li>
+                {% if Project.people.all|length > 1 and forloop.revcounter0 == 1 %} &{% endif %}
+            </li>
             {% endfor %}
             </ul>
-            {% endif %}
+            {% endif %} 
             <span class="prt-project-description description">
                 {{ Project.description|markdown }}
             </span>
+           
             </article>
     {% endfor %}
     </section>

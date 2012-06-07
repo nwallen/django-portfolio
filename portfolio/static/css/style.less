@@ -218,37 +218,53 @@ td { vertical-align: top; }
    Author:Nicholas Wallen
    ========================================================================== */
 
-@import url("http://fonts.googleapis.com/css?family=Cabin+Sketch:400,700|Lato:300|Francois+One|Codystar|Rokkitt");
+@import url("http://fonts.googleapis.com/css?family=Nunito:300|Francois+One|Codystar|Rokkitt:400");
 
 
 @font-size:14px;
 @leading:@font-size * 1.5;
 @column:@leading * 1.618;
 
-.title-font (@color:grey){
+
+@title-color:#222;
+@accent-color:darken(#50c9c0, 5%);
+@muted-color:#acacac;
+@pullquote-color:#666;
+@link-color:#efae2f;
+
+@twitter-color:#33CCFF;
+@linkedin-color:#4875B4;
+@tumblr-color:#2B4964;
+@facebook-color:#3B5998;
+@google-color:#D6492C;
+
+
+.title-font (@color:@title-color){
     font-family : 'Codystar', sans-serif;
     font-weight:400;
     color:@color;
     text-transform:uppercase;
 }
 
-.header-font (@color:teal){
+.header-font (@color:@accent-color){
     font-family : 'Francois One', sans-serif;
     font-weight:400;
     color:@color;
     text-transform:uppercase;
 }
 
-.pullquote-font(@color:#666){
+.pullquote-font(@color:@pullquote-color){
     font-family:'Rokkitt';
+    font-weight:400;
     font-size:@font-size*1.5;
     line-height:@leading*1.5;
     color:@color;
 }
 
 .body-font{
-    font-family : 'Lato', sans-serif;
+    font-family : 'Nunito', sans-serif;
     font-weight:300;
+    color:@pullquote-color;
 }
 
 .columns(@count:3){
@@ -268,6 +284,49 @@ body{
     font-size:@font-size;
     line-height:@leading;
 }
+
+.emphatic-link(@color:@link-color){
+    border-bottom:@muted-color 1px solid;
+    color:@color;
+    &:hover, &:visited:hover{
+        color:darken(@color, 20%);
+        border-bottom:@color 1px solid;
+    }
+}
+
+a{
+    color:@pullquote-color;
+    .animate-transition;
+    border-bottom:@link-color 1px solid;
+    text-decoration:none;
+    &:hover, &:visited:hover{
+        color:@link-color;
+    }
+    &:visited{
+        color:@pullquote-color;
+    }
+    &[title~=twitter]{
+        .emphatic-link(@twitter-color);
+    }
+    &[title~=linkedin]{
+        .emphatic-link (@linkedin-color); 
+    }
+    &[title~=tumblr]{
+        .emphatic-link(@tumblr-color);
+    } 
+    &[title~=facebook]{
+        .emphatic-link(@facebook-color);
+    }
+     &[title~=google]{
+        .emphatic-link(@google-color);
+    }
+}
+
+
+.prt-project-name a{
+    border-bottom:none;
+}
+
 
 p,ul,ol, h1, h2, h3, h4, h5, h6, img{
     margin-top:0;
@@ -309,7 +368,8 @@ h4{
     border-radius: 100%;
 }
 
-.card{
+.card(@color:#fff){
+    background-color:@color;
     padding:@column;
     margin-bottom:@leading*2;
     boarder: 1px solid #222;
@@ -374,6 +434,9 @@ nav{
     height:90%;
     overflow:auto;
     .animate-transition;
+    .prt-author{
+        font-size:@font-size*1.1;
+    }
 }
 
 .prt-nav-link{
@@ -391,7 +454,7 @@ nav{
        
     }
     .name{
-        .header-font(grey); 
+        .header-font(@muted-color); 
     }
     &:hover,&.active{
         cursor:pointer;
@@ -423,7 +486,7 @@ nav{
     padding-right:@column*2;
     margin-right:auto;
     margin-bottom:@leading;
-    max-width:@column*28;
+    max-width:@column*26;
 }
 
 .prt-intro{
@@ -451,6 +514,10 @@ nav{
     .card;
     position:relative; 
     background-color:#fff;
+    .prt-project-name{
+        margin-bottom:@leading*.5;
+        margin-top:@leading*.5;
+    }
     .name a{
         .header-font;
     }
@@ -463,6 +530,7 @@ nav{
     .associations{
         padding:0;
         li{
+            //.header-font(@muted-color);
             list-style-type:none;
             display:inline;
             h4{
@@ -477,49 +545,71 @@ nav{
         margin-bottom:@leading*.5;
     }
     .acts li, .people li{
+        //.header-font(@muted-color);
         display:inline-block;
         list-style-type:none;
     }
     .act .name{
         text-transform:uppercase;
-        .header-font(grey);
-        //margin-right:@font-size*.25;
-        //margin-left:@font-size*.25;
-        //background-color: teal;
-        //padding:2px;
+        .header-font(@muted-color);
+    }
+    .person a{
+        &:hover, &:hover:visited{
+            .name{
+                color:@link-color;
+            }
+        }
+        
     }
     .person .name{
-        .header-font(grey);
+        .header-font(@muted-color);
     }
-    .intro{
+    li.intro{
         .header-font;
         margin-right:@font-size*.5;
     }
     .summary{
         .pullquote-font;
+        line-height:@leading;
+    }
+    iframe{
+        margin-bottom:@leading;
     }
     .description p{
+        &:before, &:after{
+          .clearfix-beforeafter;
+        }
+        &:after{
+          .clearfix-after;
+        }
+        .clearfix;
+        .img-caption{
+            .pullquote-font;
+            border-top: 2px fade(@accent-color, 50%) solid;
+            line-height:@leading*1.5;
+            position:relative;
+            top:@leading*.5;
+            a{
+                text-decoration:underline;
+                border:none;
+            }
+        }
         img{
-            .card;
-            padding:4px;
-            float:right;
+            float:left;
             width:50%;
-            //margin:0;
-            margin-left:@column;
-            margin-top:@leading;
-            margin-bottom:@leading;
+            margin:@leading*.5 @column @leading*.5 0;
             .animate-transition;
             &:active{
                 width:100%;
                 margin-left: 0;
-                margin-bottom:@leading;
+                margin-right:0;
+                margin-bottom:@leading*.5;
             }
         }
     }
 }
 
 .prt-project-image{
-    -webkit-transition:all 0.2s ease;
     width:100%;
 }
 
@@ -527,7 +617,9 @@ nav{
 
 footer{
     position:fixed;
-    bottom:@leading*2;
+    bottom:0;
+    font-size:@font-size*.8;
+    text-transform:uppercase;
     left:@column;
     max-width:@column*7;
 
@@ -540,7 +632,7 @@ footer{
    Modify as content requires.
    ========================================================================== */
 
-@media only screen and (max-width:800px) {
+@media only screen and (max-width:960px) {
      nav{
         .card; 
         position:static;
@@ -563,11 +655,15 @@ footer{
     }
 
     .prt-project{
+        .dates{
+            position:static;
+        }
         .description p{
+            
             img{ 
                 width:100%;
                 margin-left: 0;
-                margin-bottom:@leading;
+                margin-bottom:@leading*.5;
             }
         }
     }
@@ -579,6 +675,7 @@ footer{
 
     footer{
         position:static;
+        margin-left:@column;
     }
 
 }
@@ -605,8 +702,8 @@ footer{
 .invisible { visibility: hidden; }
 
 /* Contain floats: h5bp.com/q */
-.clearfix:before, .clearfix:after { content: ""; display: table; }
-.clearfix:after { clear: both; }
+.clearfix-beforeafter, .clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix-after, .clearfix:after { clear: both; }
 .clearfix { *zoom: 1; }
 
 

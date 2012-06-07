@@ -21,6 +21,20 @@ jQuery(document).ready(function($) {
                     $('.prt-nav-link a[href=#'+id+']').parent().prev().addClass('active');
                 }
         },{offset: '50' });
+
+        $(".prt-project .description img").fadeTo(0,0);
+       
+        $(".prt-project .description img").waypoint(function(event,direction){
+                src = $(this).src
+                if(src == undefined){
+                    new_src = $(this).attr('data-src');
+                    $(this).attr('src', new_src);
+                    $(this).fadeTo(300,1);
+                }
+                else{
+                    $(this).fadeTo(0,1);
+                }
+        },{offset: '70' });
         
 
 
