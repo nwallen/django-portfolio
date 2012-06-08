@@ -1,13 +1,13 @@
 /* Author:
-Nicholas Wallen
-*/
+Nicholas Wallen */
 
 jQuery(document).ready(function($) {
  
 	$(".scroll").click(function(event){		
 		event.preventDefault();
                 var hash =  this.hash;
-		$('html,body').animate({scrollTop:$(this.hash).offset().top}, 500, '', function(){ location.hash = hash;});
+                title_h = $('.prt-title-blk').height()+40;
+		$('html,body').animate({scrollTop:$(this.hash).offset().top - title_h}, 500, '', function(){ location.hash = hash;});
         });
 
         $(".prt-project").waypoint(function(event,direction){
@@ -35,11 +35,16 @@ jQuery(document).ready(function($) {
                     $(this).fadeTo(0,1);
                 }
         },{offset: '70' });
+
+         $("#prt-title-wrap").waypoint(function(event,direction){
+            if(direction =='down'){
+                $('.prt-title-blk').addClass('min');
+                $('nav').removeClass('min');
+            }
+            if(direction == 'up'){
+                $('.prt-title-blk').removeClass('min');
+                $('nav').addClass('min');
+            }  
+         },{offset: '0' });
         
-
-
 });
-
-
-
-

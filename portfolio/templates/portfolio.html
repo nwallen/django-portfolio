@@ -4,10 +4,15 @@
 {% block title %} {{portfolio.author}} {{portfolio.name}} {% endblock %}
 
 {% block header %}
-  
-    <nav>
-        <h4 class="prt-author">{{portfolio.author}}</h4>
-        <h1 class="prt-name">{{portfolio.name}}</h1>
+
+    <div id="prt-title-wrap">
+        <div class="prt-title-blk clearfix"> 
+            <h4 class="prt-author">{{portfolio.author}}</h4>
+            <h1 class="prt-name">{{portfolio.name}}</h1>
+        </div>
+    </div>
+
+    <nav class="min"> 
         <ul class="prt-nav">
         {% for Project in portfolio.projects.all %}
         <li class="prt-nav-link clearfix">
@@ -20,12 +25,13 @@
         {% endfor %}
         </ul>
     </nav>  
-    <article class="prt-intro">
-        {{ portfolio.intro|markdown }}
-    </article>
+    
 {% endblock %}
 
 {% block content %}
+    <article class="prt-intro">
+        {{ portfolio.intro|markdown }}
+    </article>
     <section class="prt-projects">
     {% for Project in portfolio.projects.all %}
     <article class="prt-project clearfix" id="{{Project.slug}}" > 
@@ -88,5 +94,3 @@
 {% block footer %}
     {{ portfolio.footer|markdown }}
 {% endblock %}
-
-
