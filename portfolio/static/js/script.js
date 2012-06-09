@@ -36,7 +36,7 @@ jQuery(document).ready(function($) {
                 }
         },{offset: '70' });
 
-         $("#prt-title-wrap").waypoint(function(event,direction){
+         $("#about").waypoint(function(event,direction){
             if(direction =='down'){
                 $('.prt-title-blk').addClass('min');
                 $('nav').removeClass('min');

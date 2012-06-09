@@ -239,7 +239,7 @@ td { vertical-align: top; }
 @google-color:#D6492C;
 
 @body-top:@leading*3;
-@side-bar-w:@column*8.5;
+@side-bar-w:@column*9;
 
 .title-font (@color:@title-color){
     font-family : 'Rokkitt', sans-serif;
@@ -372,7 +372,7 @@ header{
     position:absolute;
     z-index:300;
     border-bottom: solid @accent-color 2px;
-    .animate-transition(box-shadow);
+    .animate-transition(box-shadow); 
     .prt-name{
         font-size:@font-size*3;
         line-height:@leading*2.8;
@@ -380,6 +380,10 @@ header{
     .prt-author{
         margin:0;
     }
+}
+
+header a{
+    text-decoration:none;
 }
 
 .min.prt-title-blk{
@@ -392,7 +396,7 @@ header{
     .prt-author, .prt-name{
         float:left;
         line-height:@leading;
-        margin: @leading*.25 @leading;
+        margin: @leading*.25 @column;
     }
     .prt-name{
         font-size:@font-size;
@@ -479,7 +483,8 @@ nav{
     top:@body-top;
     padding-top:2px;
     left:@column;
-    max-width:@side-bar-w;
+    width:25%;
+    min-width:(@side-bar-w);
     height:90%;
     overflow:auto;
     .animate-transition;
@@ -501,6 +506,7 @@ nav.min{
 
 .prt-nav-link{
     .animate-transition;
+    cursor:pointer;
     padding:0 0 @leading*.5 1px;
     a{
         text-decoration:none;
@@ -515,6 +521,7 @@ nav.min{
        
     }
     .name{
+            width:70%;
             .header-font(@muted-color); 
         }
         &:hover,&.active{
@@ -544,10 +551,10 @@ nav.min{
 #content, header{
     margin-left:auto;
     padding-left:@side-bar-w;
-    padding-right:@column*2;
+    padding-right:@column*1;
     margin-right:auto;
     margin-bottom:@leading;
-    max-width:@column*26;
+    max-width:850px;
 }
 
 .prt-intro{
@@ -787,6 +794,28 @@ footer{
 
 }
 
+
+@media only screen and (max-width:550px) {
+    .prt-title-blk{
+        padding:@leading*.25 0 !important;
+        .prt-name, .prt-author{
+            clear:both;
+            margin:0 !important;
+            width:100% !important;
+            padding:0 @column !important;
+            line-height:1 !important;
+        }        
+    }
+
+    .prt-intro{
+        img{
+            margin-left:auto;
+            margin-right:auto;
+        }
+    }
+
+    
+}
 
 
 /* ==|== non-semantic helper classes ========================================
