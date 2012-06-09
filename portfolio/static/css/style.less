@@ -226,11 +226,14 @@ td { vertical-align: top; }
 @column:@leading * 1.618;
 
 
+@blue-green: #50c9c0;
+@warm-yellow: darken(#efae2f, 10%);
+
 @title-color:#222;
-@accent-color:darken(#50c9c0, 5%);
+@accent-color:desaturate(@blue-green, 10%);
 @muted-color:#acacac;
 @pullquote-color:#666;
-@link-color:#efae2f;
+@link-color:@warm-yellow;
 
 @twitter-color:#33CCFF;
 @linkedin-color:#4875B4;
@@ -589,7 +592,8 @@ nav.min{
         .header-font;
     }
     .dates{
-        .body-font;
+        .header-font(@muted-color);
+        font-size:@font-size*.9;
         position:absolute;
         top:@column;
         right:@column;
