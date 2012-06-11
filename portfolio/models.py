@@ -26,7 +26,7 @@ class Portfolio(models.Model):
     slug = models.SlugField(max_length=50, unique=True)
     intro = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='projectimages', blank=True, null=True)
-    image_crop = ImageSpecField ([SmartResize(200,200)],image_field='image',format='JPEG', options={'quality':90})
+    image_crop = ImageSpecField ([SmartResize(200,200)],image_field='image', options={'quality':100})
     footer= models.TextField(blank=True, null=True)
     projects = models.ManyToManyField('Project', blank=True)
     public = models.BooleanField()
@@ -114,7 +114,7 @@ class Media(models.Model):
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=200, blank=True, null=True)
     image = models.ImageField(upload_to='projectimages', blank=True)
-    medium = ImageSpecField ([SmartResize(800,400)],image_field='image',format='JPEG', options={'quality':90})
+    medium = ImageSpecField ([SmartResize(800,400)],image_field='image', options={'quality':100})
     thumbnail = ImageSpecField ([SmartResize(60,60), Adjust(color=1.2, contrast=1.2)],image_field='image',format='JPEG', options={'quality':100})
     thumbnail_bw = ImageSpecField ([SmartResize(60,60), Adjust(color=0, contrast=1.2)],image_field='image',format='JPEG', options={'quality':100})
 
