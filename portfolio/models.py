@@ -60,15 +60,12 @@ class Project(models.Model):
 
     def save(self):
         #automatic markdown image syntax completion: ![title] to ![title](url)    
-        body = self.description
      
         for media in self.media_set.all():
             imageTag = '![%s]' % media.title
             imageReplace = '<img title="%s" data-src="%s" src=""/><span class="img-caption">%s</span>' % (media.title, media.medium.url, media.description)
-            # don't add the url if already added
-            exists = body.find(imageReplace)
-            if exists == -1:
-                self.description = body.replace(imageTag, imageReplace)
+            body = self.description
+            self.description = body.replace(imageTag, imageReplace)
         
         super(Project, self).save()
 
