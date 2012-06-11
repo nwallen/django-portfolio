@@ -497,7 +497,8 @@ nav.min{
     .prt-nav-link{
         padding-bottom:0;
         .name{
-            margin-left:0;
+            margin:0;
+            margin-bottom:@leading*.75;
         }
         .thumb{
             display:none;
@@ -563,6 +564,7 @@ nav.min{
 .prt-intro{
     .pullquote-font;
     padding-top:@leading*6;
+    margin-bottom:@leading*2;
     img{
         .circle;
         .shadow-stroke(10px);
@@ -687,10 +689,11 @@ nav.min{
 footer{
     position:fixed;
     bottom:0;
-    font-size:@font-size*.8;
     left:@column;
     max-width:@column*7;
-
+    .pullquote-font;
+    font-size:@font-size;
+    line-height:1;
 }
 
 
@@ -709,6 +712,10 @@ footer{
                 height:30px;
             }
         }
+    }
+
+    .prt-nav-link-name{
+        margin-top:@leading*.5;
     }
 
 }
@@ -800,6 +807,8 @@ footer{
 
 
 @media only screen and (max-width:550px) {
+
+
     .prt-title-blk{
         padding:@leading*.25 0 !important;
         .prt-name, .prt-author{
