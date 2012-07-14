@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.conf.urls.static import static
+from django.http import HttpResponse
 from django.conf import settings
 from portfolio.api import ProjectResource
 from portfolio.views import PortfolioView, FeaturedPortfolioView
@@ -18,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^api/', include(project_resource.urls)),
     url(r'^admin/', include(admin.site.urls)), 
     url(r'^(?P<slug>[\w-]+)/$', PortfolioView.as_view()),
+    url(r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /static/", mimetype="text/plain")),
 )
 
 
