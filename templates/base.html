@@ -26,6 +26,15 @@
 <body>
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
   <header>
+    <nav id="nav-bar">
+        <h3 class="abt-title">{{About.title}}</h3>
+        {% for Link in About.link_set.all %}
+            <a class="nav-link" href="{{Link.url}}"><h3>{{Link.title}}</h3></a>
+        {% endfor %}
+        <h3 class="abt-job">{{About.job}}</h4>
+
+    </nav>
+ 
     {% block header %}{% endblock %}
   </header>
   <div id="content" role="main">
@@ -33,6 +42,8 @@
   </div>
   <footer>
     {% if user.is_authenticated %}<a href='accounts/logout'> Logout </a>{% endif %}
+    {{ About.description|markdown }}
+    <img src="{{About.image_crop.url}}" />
     {% block footer %}{% endblock %}
   </footer>
 

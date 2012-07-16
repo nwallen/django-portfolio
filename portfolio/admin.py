@@ -1,18 +1,25 @@
-from portfolio.models import Project, Portfolio, Activity, Media, Association, Person, FeaturedPortfolio
+from portfolio.models import About, Project, Link, Portfolio, Activity, Video, Photo, Association, Person, FeaturedPortfolio
 from django.contrib import admin
 
 
-class MediaInline(admin.TabularInline):
-    model = Media
+class PhotoInline(admin.TabularInline):
+    model = Photo
 
+class VideoInline(admin.TabularInline):
+    model = Video
+
+class LinkInline(admin.TabularInline):
+    model = Link
+
+class AboutAdmin(admin.ModelAdmin):
+    model = About
+    inlines = [LinkInline]
 
 class ProjectAdmin(admin.ModelAdmin):
     model = Project
     prepopulated_fields = {"slug": ("name",)}
-    inlines = [ MediaInline,]
+    inlines = [ PhotoInline, VideoInline]
     filter_horizontal = ('associations','people','activities')
-
-
 
 class PersonAdmin(admin.ModelAdmin):
     model = Person 
@@ -42,3 +49,5 @@ admin.site.register(Activity, ActivityAdmin)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Portfolio, PortfolioAdmin)
 admin.site.register(FeaturedPortfolio)
+admin.site.register(About, AboutAdmin)
+

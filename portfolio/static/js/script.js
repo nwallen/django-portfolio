@@ -3,11 +3,10 @@ Nicholas Wallen */
 
 jQuery(document).ready(function($) {
  
-	$(".scroll").click(function(event){		
-		event.preventDefault();
-                var hash =  this.hash;
-                title_h = $('.prt-title-blk').height()+40;
-		$('html,body').animate({scrollTop:$(this.hash).offset().top - title_h}, 500, '', function(){ location.hash = hash;});
+	    $(".scroll").click(function(event){		
+		    event.preventDefault();
+             var hash =  this.hash;
+		    $('html,body').animate({scrollTop:$(this.hash).offset().top}, 500, '', function(){ location.hash = hash;});
         });
 
         $(".prt-project").waypoint(function(event,direction){
@@ -36,15 +35,23 @@ jQuery(document).ready(function($) {
                 }
         },{offset: '70' });
 
-         $("#about").waypoint(function(event,direction){
+         $("#prt-projects").waypoint(function(event,direction){
             if(direction =='down'){
-                $('.prt-title-blk').addClass('min');
-                $('nav').removeClass('min');
+                $('#quick-nav').removeClass('hide');
             }
+         },{offset: '20%' });
+
+
+         $("#prt-gallery").waypoint(function(event,direction){
             if(direction == 'up'){
-                $('.prt-title-blk').removeClass('min');
-                $('nav').addClass('min');
+                $('#quick-nav').addClass('hide');
             }  
-         },{offset: '0' });
+         },{offset: '-20%' });
+
+         
+         $('#quick-nav-toggle').click(function(event){
+		     event.preventDefault();
+             $('#quick-nav').toggleClass('min');
+         });
         
 });

@@ -4,8 +4,8 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 # debugging code
-import sys
-from pprint import pprint
+# import sys
+# from pprint import pprint
 # pprint (public , sys.stderr)
 
 
@@ -21,7 +21,7 @@ class PublicPortfolioView(DetailView):
     context_object_name = 'portfolio'
     template_name = 'portfolio.html'
     model = Portfolio
-    
+     
 
 class ProtectedPortfolioView(LoginRequiredMixin, PublicPortfolioView):
     model = Portfolio

@@ -1,65 +1,87 @@
 {% extends "base.html" %}
 {% load markup %}
+{% load oembed_tags %}
+
 
 {% block title %} {{portfolio.author}} {{portfolio.name}} {% endblock %}
 
 {% block header %}
 
     <div id="about">
-        <a href="#about" class="scroll">
-        <div class="prt-title-blk clearfix"> 
-            <h4 class="prt-author">{{portfolio.author}}</h4>
-            <h1 class="prt-name">{{portfolio.name}}</h1>
-        </div>
-    </a>
+         <h1 class="prt-name">{{portfolio.name}}</h1>
+         <article class="prt-intro">
+            {{ portfolio.intro|markdown }}
+        </article>
     </div>
 
-    <nav class="min"> 
-        <ul class="prt-nav">
+    <nav id="quick-nav" class="hide">
+        <a href='#' id="quick-nav-toggle"> Min </a> 
+        <ul >
+        <a href="#about" class="scroll" ><h4 class="prt-name">{{portfolio.name}}</h4></a>
         {% for Project in portfolio.projects.all %}
         <li class="prt-nav-link clearfix">
             <a class="scroll"  href="#{{Project.slug}}">
-                <div class="thumb" style="background-image:url('{{Project.media_set.all.0.thumbnail.url}}');" /></div>
                 <span class="prt-nav-link-name name">{{Project.name}}</span>  
             </a>
-        </li>
-            
+        </li> 
         {% endfor %}
         </ul>
-    </nav>  
+    </nav> 
+    
+    <nav id="prt-gallery" class="clearfix"> 
+        <ul >
+        {% for Project in portfolio.projects.all %}
+        <li class="prt-gallery-itm clearfix">
+            <a class="scroll"  href="#{{Project.slug}}">
+                <div class="thumb" style="background-image:url('{%if Project.thumbnail %} {{Project.thumbnail.url}} {% endif%}');" /></div>
+                <div class="popup"> {{Project.end_date|date:"Y"}} {{ Project.summary|markdown }}  </div>
+                <span class="prt-nav-link-name name">{{Project.name}}</span>  
+            </a>
+        </li> 
+        {% endfor %}
+        </ul>
+    </nav> 
     
 {% endblock %}
 
 {% block content %}
-    <article class="prt-intro">
-        {{ portfolio.intro|markdown }}
-    </article>
-    <section class="prt-projects">
+   
+    <section id="prt-projects">
     {% for Project in portfolio.projects.all %}
     <article class="prt-project clearfix" id="{{Project.slug}}" > 
-            <p class="prt-project-dates dates">
-                <span class="project-start-date date">{{Project.start_date|date:"M Y"}}</span> -
-                <span class="project-end-date date">{{Project.end_date|date:"M Y"}}</span>
-            </p>
-
-            <ul class="associations">
-            {% for Association in Project.associations.all %}
-                <li><h4 class="prt-project-assc">{{Association.name}}</h4>
-                {% if Project.associations.all|length > 1 and forloop.counter < Project.associations.all|length %}&{% endif %}
-                </li>
-            {% endfor %}
-            </ul> 
             
-           
-            
+            <h4 class="prt-project-assc assc">
+                {% for Association in Project.associations.all %}
+                    {{Association.name}}
+                    {% if Project.associations.all|length > 1 and forloop.counter < Project.associations.all|length %}&{% endif %}
+                {% endfor %}<span class="project-end-date date">,  {{Project.end_date|date:"Y"}}</span>
+            </h4>    
+             
             <h2 class="prt-project-name name">
                 <a href="{{BASE_URL}}#{{Project.slug}}">{{Project.name}}</a>
             </h2>
-            <span class="prt-project-summary summary">
+           
+            <div class="prt-project-summary summary">
                 {{ Project.summary|markdown }} 
-            </span>
+            </div>
+            
+            <div class="prt-slideshow">
+            {% for Media in Project.media_set.all %}
+               {% if Media.video.url %}
+                <div class="slide">
+                    {% oembed 800x400 %}
+                        {{ Media.video.url }}
+                    {% endoembed %} 
+                </div>   
+               {% endif %}
+               {% if Media.photo.medium %} 
+                 <div class="slide">
+                    <img src="{{Media.photo.medium.url}}" />
+                 </div>
+               {% endif %}
+            {% endfor %}
+            </div>
 
-            <img class="prt-project-image" src="{{Project.media_set.all.0.medium.url}}"/> 
            <ul class="prt-project-acts acts">
              <li class="intro"> What I Did: </li>      
             {% for Activity in Project.activities.all %}
@@ -94,5 +116,5 @@
 {% endblock %}
 
 {% block footer %}
-    {{ portfolio.footer|markdown }}
+    {{ portfolio.footer|markdown }} 
 {% endblock %}

@@ -2,7 +2,8 @@ from portfolio.models import About
 
 def about_me(request):
     about = About.objects.filter(pk=1)
-    desc = about[0].description
+    about_obj = about[0]
+
     return {
-            'about_me': desc,
-        }
+            'About': about_obj,
+     }
