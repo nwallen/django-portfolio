@@ -65,21 +65,26 @@
                 {{ Project.summary|markdown }} 
             </div>
             
-            <div class="prt-slideshow">
-            {% for Media in Project.media_set.all %}
-               {% if Media.video.url %}
-                <div class="slide">
-                    {% oembed 800x400 %}
-                        {{ Media.video.url }}
-                    {% endoembed %} 
-                </div>   
-               {% endif %}
-               {% if Media.photo.medium %} 
-                 <div class="slide">
-                    <img src="{{Media.photo.medium.url}}" />
-                 </div>
-               {% endif %}
-            {% endfor %}
+            <div class="prt-slideshow-container">
+                <ul class="prt-slideshow clearfix">
+                {% for Media in Project.media_set.all %}
+                   {% if Media.video.url %}
+                    <li class="slide">
+                        {% oembed 800x400 %}
+                            {{ Media.video.url }}
+                        {% endoembed %} 
+                        <div class="video-mask"></div>
+                        {% if Media.video.description %}<div class="slide-desc">{{Media.video.description|markdown}}</div>{% endif %}
+                    </li>   
+                   {% endif %}
+                   {% if Media.photo.medium %} 
+                     <li class="slide">
+                        <img src="{{Media.photo.medium.url}}" />
+                        {% if Media.photo.description %}<div class="slide-desc">{{Media.photo.description|markdown}}</div>{% endif %}
+                     </li>
+                   {% endif %}
+                {% endfor %}
+                </ul>
             </div>
 
            <ul class="prt-project-acts acts">
